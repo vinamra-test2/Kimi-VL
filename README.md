@@ -34,35 +34,39 @@ The model adopts an MoE language model, a native-resolution visual encoder (Moon
 
 ## 3. News
 
+- 2025.06.21: Release of Kimi-VL-A3B-Thinking-2506: [Tech Blog \& Cookbook](https://huggingface.co/blog/moonshotai/kimi-vl-a3b-thinking-2506), [🤗 Hugging Face](https://huggingface.co/moonshotai/Kimi-VL-A3B-Thinking-2506)
 - 2025.04.15: [vLLM](https://github.com/vllm-project/vllm) has supported Kimi-VL deployment. See [#16387](https://github.com/vllm-project/vllm/pull/16387) for details.
 - 2025.04.14: [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) has supported Kimi-VL finetuning. See [#7719](https://github.com/hiyouga/LLaMA-Factory/pull/7719) for details.
 
 ## 4. Model Variants
 
-🤗 For general multimodal perception and understanding, OCR, long video and long document, video perception, and agent uses, we recommend `Kimi-VL-A3B-Instruct` for efficient inference; for advanced text and multimodal reasoning (e.g. math), please consider using `Kimi-VL-A3B-Thinking`.
+🤗 For general multimodal perception and understanding, OCR, long video and long document, video perception, and OS-agent uses, we recommend `Kimi-VL-A3B-Instruct` for efficient inference; our new thinking version, `Kimi-VL-A3B-Thinking-2506` also supports better multimodal perception, long video and long document and OS-agent grounding while obtaining good math reasoning abilities. See [this blog](https://huggingface.co/blog/moonshotai/kimi-vl-a3b-thinking-2506) for more information.
 
 <div align="center">
 
 | **Model** | **#Total Params** | **#Activated Params** | **Context Length** | **Download Link** |
 | :------------: | :------------: | :------------: | :------------: | :------------: |
+| 🔥Kimi-VL-A3B-Thinking-2506  | 16B | 3B |  128K   | [🤗 Hugging Face](https://huggingface.co/moonshotai/Kimi-VL-A3B-Thinking-2506)   |
 | Kimi-VL-A3B-Instruct | 16B | 3B | 128K   | [🤗 Hugging Face](https://huggingface.co/moonshotai/Kimi-VL-A3B-Instruct)   |
-| Kimi-VL-A3B-Thinking  | 16B | 3B |  128K   | [🤗 Hugging Face](https://huggingface.co/moonshotai/Kimi-VL-A3B-Thinking)   |
+| Kimi-VL-A3B-Thinking (deprecated)  | 16B | 3B |  128K   | [🤗 Hugging Face](https://huggingface.co/moonshotai/Kimi-VL-A3B-Thinking)   |
 
 </div>
 
 > [!Note]
 > Recommended parameter settings:
-> - For **Thinking models**, it is recommended to use `Temperature = 0.6`. 
+> - For **Thinking models**, it is recommended to use `Temperature = 0.8`. 
 > - For **Instruct models**, it is recommended to use `Temperature = 0.2`. 
 
 
 ### Hugging Face Demo
 
 > 🤗 We serve our model demo in Hugging Face spaces:
-> - Chat with **Kimi-VL-A3B-Thinking**👀🤔🗺️ (featuring thinking, math, puzzle solving) model on <a href="https://huggingface.co/spaces/moonshotai/Kimi-VL-A3B-Thinking/">Chat Web</a>.
-> - Chat with **Kimi-VL-A3B-Instruct**💻🎬📕 (featuring agent, video, multi-page document) model on <a href="https://huggingface.co/spaces/moonshotai/Kimi-VL-A3B/">Chat Web</a>.
+> - Chat with **Kimi-VL-A3B-Thinking-2506**👀🤔🗺️🎬📖🖥️ (*unifying thinking, general understanding, puzzle solving, agent, video, PDF*) model on <a href="https://huggingface.co/spaces/moonshotai/Kimi-VL-A3B-Thinking/">Chat Web</a>.
 
 ## 5. Performance
+
+> [!Note]
+> See the performance of Kimi-VL-A3B-Thinking-2506 at [Hugging Face](https://huggingface.co/moonshotai/Kimi-VL-A3B-Thinking-2506#2-performance).
 
 As an efficient model, Kimi-VL can robustly handle diverse tasks (fine-grained perception, math, college-level problems, OCR, agent, etc) across a broad spectrum of input forms (single-image, multi-image, video, long-document, etc).
 
@@ -72,7 +76,7 @@ A brief comparison with existing 10B-level dense VLMs and DeepSeek-VL2 (A4.5B):
   <img width="100%" src="figures/instruct_perf.png">
 </div>
 
-With effective long-thinking abilities, Kimi-VL-A3B-Thinking can match the performance of 30B/70B frontier open-source VLMs on MathVision benchmark:
+With effective long-thinking abilities, Kimi-VL-A3B-Thinking (2504 version) can match the performance of 30B/70B frontier open-source VLMs on MathVision benchmark:
 
 <div align="center">
   <img width="100%" src="figures/thinking_perf.png">
@@ -92,12 +96,11 @@ pip install -r requirements.txt
 > [!Note]
 > If you encounter Out-of-Memory or want to speed up inference, please install **flash-attn** with `pip install flash-attn --no-build-isolation`.
 
-
 ### Inference with Hugging Face Transformers 
 
 We introduce how to use our model at inference stage using transformers library. It is recommended to use python=3.10, torch=2.5.1, and transformers=4.51.3 as the development environment. 
 
-Kimi-VL-A3B-Instruct:
+#### Kimi-VL-A3B-Instruct:
 
 ```python
 import torch
@@ -140,14 +143,14 @@ response = processor.batch_decode(
 print(response)
 ```
 
-Kimi-VL-A3B-Thinking:
+#### Kimi-VL-A3B-Thinking-2506:
 
 ```python
 import torch
 from PIL import Image
 from transformers import AutoModelForCausalLM, AutoProcessor
 
-model_path = "moonshotai/Kimi-VL-A3B-Thinking"
+model_path = "moonshotai/Kimi-VL-A3B-Thinking-2506"
 model = AutoModelForCausalLM.from_pretrained(
     model_path,
     torch_dtype="auto",
@@ -177,7 +180,7 @@ messages = [
 ]
 text = processor.apply_chat_template(messages, add_generation_prompt=True, return_tensors="pt")
 inputs = processor(images=images, text=text, return_tensors="pt", padding=True, truncation=True).to(model.device)
-generated_ids = model.generate(**inputs, max_new_tokens=2048)
+generated_ids = model.generate(**inputs, max_new_tokens=32768, temperature=0.8)
 generated_ids_trimmed = [
     out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
 ]
@@ -209,7 +212,7 @@ from PIL import Image
 from transformers import AutoProcessor
 from vllm import LLM, SamplingParams
 
-model_path = "moonshotai/Kimi-VL-A3B-Instruct"  # or "moonshotai/Kimi-VL-A3B-Thinking"
+model_path = "moonshotai/Kimi-VL-A3B-Instruct"  # or "moonshotai/Kimi-VL-A3B-Thinking-2506"
 llm = LLM(
     model_path,
     trust_remote_code=True,
@@ -241,7 +244,13 @@ Serve Kimi-VL with `vllm serve` command:
 
 ```bash
 # If you need a longer context window, you can set --max-model-len and --max-num-batched-tokens to 131072
-vllm serve moonshotai/Kimi-VL-A3B-Instruct --served-model-name kimi-vl --trust-remote-code --tensor-parallel-size 1 --max-num-batched-tokens 32768 --max-model-len 32768 --limit-mm-per-prompt image=8
+# If you need more input images, you can set --limit-mm-per-prompt image=256 or 512
+
+# kimi-vl-thinking-2506
+vllm serve moonshotai/Kimi-VL-A3B-Thinking-2506 --served-model-name kimi-vl-thinking-2506 --trust-remote-code --tensor-parallel-size 1 --max-num-batched-tokens 32768 --max-model-len 32768 --limit-mm-per-prompt image=64
+
+# kimi-vl-instruct
+vllm serve moonshotai/Kimi-VL-A3B-Instruct --served-model-name kimi-vl --trust-remote-code --tensor-parallel-size 1 --max-num-batched-tokens 32768 --max-model-len 32768 --limit-mm-per-prompt image=64
 ```
 
 Call the API
@@ -270,7 +279,7 @@ messages = [
 ]
 
 completion = client.chat.completions.create(
-  model="kimi-vl",
+  model="kimi-vl-thinking-2506", # or kimi-vl
   messages=messages
 )
 
