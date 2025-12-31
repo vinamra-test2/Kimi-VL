@@ -44,7 +44,7 @@ The model adopts an MoE language model, a native-resolution visual encoder (Moon
 
 ## 3. News
 
-- 2025.06.21: Release of Kimi-VL-A3B-Thinking-2506: [Tech Blog \& Cookbook](https://huggingface.co/blog/moonshotai/kimi-vl-a3b-thinking-2506), [🤗 Hugging Face](https://huggingface.co/moonshotai/Kimi-VL-A3B-Thinking-2506)
+- 2025.06.21: Release of Kimi-VL-A3B-Thinking-2506: [Tech Blog & Cookbook](https://huggingface.co/blog/moonshotai/kimi-vl-a3b-thinking-2506), [🤗 Hugging Face](https://huggingface.co/moonshotai/Kimi-VL-A3B-Thinking-2506)
 - 2025.04.15: [vLLM](https://github.com/vllm-project/vllm) has supported Kimi-VL deployment. See [#16387](https://github.com/vllm-project/vllm/pull/16387) for details.
 - 2025.04.14: [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) has supported Kimi-VL finetuning. See [#7719](https://github.com/hiyouga/LLaMA-Factory/pull/7719) for details.
 
@@ -310,3 +310,10 @@ print(completion.choices[0].message)
 }
 ```
 
+---
+
+## Related Projects
+
+1. related project [Qwen3-VL](https://github.com/QwenLM/Qwen3-VL)
+2. related project [DeepSeek-VL2](https://github.com/deepseek-ai/DeepSeek-VL2)
+3. related project [Aria](https://github.com/rhymes-ai/Aria)
